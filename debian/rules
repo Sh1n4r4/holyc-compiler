@@ -1,0 +1,16 @@
+#!/usr/bin/make -f
+
+%:
+	dh $%
+
+override_dh_build-arch:
+	dh_build-arch
+	cd $(CURDIR) && go build -o holyc -v .
+
+override_dh_install:
+	dh_install
+	install -Dm755 $(CURDIR)/holyc $(CURDIR)/debian/holyc/usr/bin/holyc
+
+override_dh_auto_test:
+	# Skip tests during build
+	true

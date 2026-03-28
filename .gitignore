@@ -1,0 +1,47 @@
+# Binaries
+holyc
+holyc-go
+*.bin
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+
+# Test binary
+*.test
+
+# Output of the go coverage tool
+*.out
+coverage.out
+coverage.html
+
+# Go workspace file
+go.work
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Build artifacts
+dist/
+pkg/
+rpm-build/
+debian-build/
+
+# Package files
+*.deb
+*.rpm
+*.tar.gz
+*.pkg.tar.zst
+
+# Build cache
+.cache/
+go/

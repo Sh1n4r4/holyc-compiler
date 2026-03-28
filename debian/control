@@ -1,0 +1,26 @@
+Source: holyc
+Section: devel
+Priority: optional
+Maintainer: Sh1n4r4 <mitonohikari74@zohomail.com>
+Build-Depends: debhelper (>= 12), golang-go
+Standards-Version: 4.5.0
+Homepage: https://github.com/Sh1n4r4/holyc-compiler
+Vcs-Git: https://github.com/Sh1n4r4/holyc-compiler.git
+Vcs-Browser: https://github.com/Sh1n4r4/holyc-compiler
+Rules-Requires-Root: no
+
+Package: holyc
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: HolyC compiler written in Go
+ HolyC is a programming language used in TempleOS. This compiler is
+ written in pure Go and compiles HolyC source code to x64 machine code.
+ .
+ Features:
+ - Lexical analysis (tokenizer)
+ - Parsing with AST generation
+ - x64 code generation
+ - Support for functions, classes, loops, conditions
+ - Command-line interface with multiple modes
+ .
+ This package contains the holyc compiler binary.

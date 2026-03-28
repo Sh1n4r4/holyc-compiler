@@ -1,0 +1,9 @@
+holyc (0.1.0) unstable; urgency=medium
+
+  * Initial release
+  * HolyC compiler written in Go
+  * Supports lexical analysis, parsing, and x64 code generation
+  * Command-line interface with tokenize and parse modes
+  * Compiles HolyC source code to binary executables
+
+ -- Your Name <your.email@example.com>  Sat, 28 Mar 2024 12:00:00 +0000
