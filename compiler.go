@@ -130,7 +130,7 @@ func countFunctions(f *Function) int {
 func typeName(t int) string {
 	switch t {
 	case RT_VOID:
-		return "void"
+		return "U0"
 	case RT_U8:
 		return "U8"
 	case RT_U16:

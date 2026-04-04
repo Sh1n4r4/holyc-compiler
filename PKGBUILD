@@ -2,7 +2,7 @@
 # Contributor: HolyC Compiler Community
 
 pkgname=holyc
-pkgver=0.1.0
+pkgver=0.1.1
 pkgrel=1
 pkgdesc="HolyC compiler written in Go - compiles HolyC source code to x64 machine code"
 arch=('x86_64' 'aarch64')

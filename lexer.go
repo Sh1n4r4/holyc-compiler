@@ -81,6 +81,7 @@ const (
 	KW_I64
 	KW_F64
 	KW_BOOL
+	KW_U0
 	KW_ASM
 	KW_SIZEOF
 	KW_INCLUDE
@@ -231,6 +232,7 @@ func (l *Lexer) NextToken() Token {
 			"I64":      KW_I64,
 			"F64":      KW_F64,
 			"Bool":     KW_BOOL,
+			"U0":       KW_U0,
 			"asm":      KW_ASM,
 			"sizeof":   KW_SIZEOF,
 			"include":  KW_INCLUDE,
