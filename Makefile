@@ -2,7 +2,7 @@
 # Build, test, and package for various Linux distributions
 
 NAME := holyc
-VERSION := 0.1.0
+VERSION := 0.1.1
 GO := go
 GIT := git
 

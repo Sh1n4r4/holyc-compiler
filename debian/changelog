@@ -1,3 +1,13 @@
+holyc (0.1.1) unstable; urgency=medium
+
+  * Add support for U0 type (void)
+  * Update parser to handle more HolyC features
+  * Improve error messages in parser
+  * Clean up redundant symbol type definitions
+  * Fix codegen issue where some operations were missing
+
+ -- LT-SYAII <lt-syaii@users.noreply.github.com>  Sat, 04 Apr 2026 10:00:00 +0000
+
 holyc (0.1.0) unstable; urgency=medium
 
   * Initial release

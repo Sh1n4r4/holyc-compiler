@@ -4,6 +4,15 @@ import (
 	"fmt"
 )
 
+// Symbol types
+const (
+	SYM_VAR = iota + 1
+	SYM_FUN
+	SYM_CLASS
+	SYM_PARAM
+	SYM_LOCAL
+)
+
 // AST node types
 const (
 	AST_NULL = iota
@@ -73,7 +82,7 @@ type ASTNode struct {
 // Symbol represents a symbol table entry
 type Symbol struct {
 	Name     string
-	Type     int // SYM_VAR, SYM_FUN, SYM_CLASS
+	Type     int // SYM_VAR, SYM_FUN, SYM_CLASS, SYM_PARAM, SYM_LOCAL
 	DataType int
 	Offset   int
 	Size     int
@@ -327,6 +336,8 @@ func (p *Parser) parseType() int {
 		return RT_F64
 	case KW_BOOL:
 		return RT_BOOL
+	case KW_U0:
+		return RT_VOID
 	default:
 		return RT_I64
 	}
@@ -516,7 +527,7 @@ func (p *Parser) parseStatement() *ASTNode {
 		return p.parseSwitchStatement()
 	case KW_GOTO:
 		return p.parseGotoStatement()
-	case KW_VOID, KW_U8, KW_U16, KW_U32, KW_U64, KW_I8, KW_I16, KW_I32, KW_I64, KW_F64, KW_BOOL:
+	case KW_VOID, KW_U0, KW_U8, KW_U16, KW_U32, KW_U64, KW_I8, KW_I16, KW_I32, KW_I64, KW_F64, KW_BOOL:
 		return p.parseVarDeclaration()
 	default:
 		node := p.parseExpression()
@@ -753,10 +764,16 @@ func (p *Parser) parseVarDeclaration() *ASTNode {
 		node.Child = p.parseExpression()
 	}
 
-	p.lexer.NextToken() // Skip semicolon
+	if p.lexer.token.Type == TK_SEMICOLON {
+		p.lexer.NextToken() // Skip semicolon
+	}
 
 	// Add to symbol table
-	p.addSymbol(name, 5, dataType, 0, typeSize(dataType)*arraySize)
+	symType := SYM_LOCAL
+	if p.currentFun == nil {
+		symType = SYM_VAR
+	}
+	node.Sym = p.addSymbol(name, symType, dataType, 0, typeSize(dataType)*arraySize)
 
 	return node
 }
@@ -813,6 +830,7 @@ func (p *Parser) parsePrimary() *ASTNode {
 			Ident: p.lexer.token.Ident,
 			Line:  p.lexer.token.Line,
 		}
+		node.Sym = p.lookupSymbol(node.Ident)
 		p.lexer.NextToken()
 
 		// Member access
@@ -876,7 +894,7 @@ func (p *Parser) parsePrimary() *ASTNode {
 		p.lexer.NextToken() // Skip )
 
 	default:
-		p.Error(p.lexer.token.Line, "Unexpected token in expression")
+		p.Error(p.lexer.token.Line, "Unexpected token in expression: %d", p.lexer.token.Type)
 		node = &ASTNode{Type: AST_LITERAL, I64Val: 0}
 	}
 
@@ -896,6 +914,14 @@ func (p *Parser) parseFunctionCall(name string) *ASTNode {
 		Line:  p.lexer.token.Line,
 	}
 
+	// Lookup function
+	for f := p.functions; f != nil; f = f.Next {
+		if f.Name == name {
+			node.Fun = f
+			break
+		}
+	}
+
 	p.lexer.NextToken() // Skip (
 
 	if p.lexer.token.Type != TK_RPAREN {
@@ -913,7 +939,9 @@ func (p *Parser) parseFunctionCall(name string) *ASTNode {
 		}
 	}
 
-	p.lexer.NextToken() // Skip )
+	if err := p.lexer.Match(TK_RPAREN); err != nil {
+		p.Error(p.lexer.token.Line, "%v", err)
+	}
 
 	return node
 }
@@ -993,6 +1021,10 @@ func (p *Parser) addSymbol(name string, symType int, dataType int, offset int, s
 	}
 
 	if p.currentFun != nil {
+		if symType == SYM_LOCAL {
+			p.currentFun.LocalCnt++
+			sym.Offset = -8 * p.currentFun.LocalCnt
+		}
 		sym.Next = p.localSyms
 		p.localSyms = sym
 	} else {
@@ -1001,6 +1033,22 @@ func (p *Parser) addSymbol(name string, symType int, dataType int, offset int, s
 	}
 
 	return sym
+}
+
+func (p *Parser) lookupSymbol(name string) *Symbol {
+	// Check locals first
+	for sym := p.localSyms; sym != nil; sym = sym.Next {
+		if sym.Name == name {
+			return sym
+		}
+	}
+	// Check globals
+	for sym := p.globalSyms; sym != nil; sym = sym.Next {
+		if sym.Name == name {
+			return sym
+		}
+	}
+	return nil
 }
 
 func (p *Parser) findSymbol(name string, table *Symbol) *Symbol {

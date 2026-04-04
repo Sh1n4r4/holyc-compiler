@@ -1,5 +1,5 @@
 Name:           holyc
-Version:        0.1.0
+Version:        0.1.1
 Release:        1%{?dist}
 Summary:        HolyC compiler written in Go
 
@@ -52,6 +52,13 @@ install -m 644 LICENSE %{buildroot}%{_licensedir}/holyc
 %license %{_licensedir}/holyc
 
 %changelog
+* Sat Apr 04 2026 LT-SYAII <lt-syaii@users.noreply.github.com> - 0.1.1-1
+- Add support for U0 type (void)
+- Update parser to handle more HolyC features
+- Improve error messages in parser
+- Clean up redundant symbol type definitions
+- Fix codegen issue where some operations were missing
+
 * Sat Mar 28 2024 Sh1n4r4 <your.email@example.com> - 0.1.0-1
 - Initial package
 - HolyC compiler written in Go

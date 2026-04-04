@@ -107,7 +107,7 @@ sudo apt update
 sudo apt install holyc
 
 # Or install .deb directly
-sudo dpkg -i holyc_0.1.0_amd64.deb
+sudo dpkg -i holyc_0.1.1_amd64.deb
 ```
 
 ### 3. Fedora/RHEL
@@ -117,7 +117,7 @@ sudo dnf copr enable your-username/holyc
 sudo dnf install holyc
 
 # Or install .rpm directly
-sudo dnf install holyc-0.1.0-1.x86_64.rpm
+sudo dnf install holyc-0.1.1-1.x86_64.rpm
 ```
 
 ### 4. From Source

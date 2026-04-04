@@ -20,7 +20,7 @@ HolyC is a programming language originally created by Terry Davis for TempleOS. 
 ### Supported Language Features
 
 #### Types
-- `void`, `Bool`
+- `U0` (void), `Bool`
 - `U8`, `U16`, `U32`, `U64`
 - `I8`, `I16`, `I32`, `I64`
 - `F64`
@@ -62,29 +62,29 @@ makepkg -si
 #### Debian / Ubuntu / Linux Mint
 ```bash
 # Download .deb package
-wget https://github.com/Sh1n4r4/holyc-compiler/releases/download/v0.1.0/holyc_0.1.0_amd64.deb
-sudo dpkg -i holyc_0.1.0_amd64.deb
+wget https://github.com/Sh1n4r4/holyc-compiler/releases/download/v0.1.1/holyc_0.1.1_amd64.deb
+sudo dpkg -i holyc_0.1.1_amd64.deb
 
 # Or build from source
 sudo apt install golang-go debhelper
 git clone https://github.com/Sh1n4r4/holyc-compiler.git
 cd holyc-go
 make pkg-deb
-sudo dpkg -i ../holyc_0.1.0_amd64.deb
+sudo dpkg -i ../holyc_0.1.1_amd64.deb
 ```
 
 #### Fedora / RHEL / openSUSE
 ```bash
 # Download .rpm package
-wget https://github.com/Sh1n4r4/holyc-compiler/releases/download/v0.1.0/holyc-0.1.0-1.x86_64.rpm
-sudo dnf install holyc-0.1.0-1.x86_64.rpm
+wget https://github.com/Sh1n4r4/holyc-compiler/releases/download/v0.1.1/holyc-0.1.1-1.x86_64.rpm
+sudo dnf install holyc-0.1.1-1.x86_64.rpm
 
 # Or build from source
 sudo dnf install golang
 git clone https://github.com/Sh1n4r4/holyc-compiler.git
 cd holyc-go
 make pkg-rpm
-sudo dnf install rpm-build/RPMS/x86_64/holyc-0.1.0-1.x86_64.rpm
+sudo dnf install rpm-build/RPMS/x86_64/holyc-0.1.1-1.x86_64.rpm
 ```
 
 ### From Source (Any Linux)
@@ -166,7 +166,7 @@ Output:
 ```
 +------------------------------------------+
 |       HolyC Compiler                     |
-|       Go Implementation v0.1.0           |
+|       Go Implementation v0.1.1           |
 +------------------------------------------+
 
 Compiling hello.hc...
@@ -254,7 +254,7 @@ The compiler generates `.bin` files containing raw x64 machine code that can be:
 - Linked with other object files
 - Analyzed with disassemblers
 
-## Limitations (v0.1.0)
+## Limitations (v0.1.1)
 
 - Single-pass compilation (no optimization)
 - Limited standard library support
